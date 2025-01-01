@@ -76,7 +76,27 @@ res.status(201).json(newJoke);
 });
 
 //5. PUT a joke
+app.put("/jokes/:id",(req,res)=>{
+   const id = Number(req.params.id);
+  console.log(id);
+  const {text:jokeText, type:jokeType} = req.body;
+if(!jokeText || !jokeType)
+{
+  return res.status(400).json({error:"Kindly add both fileds"});
+}
+  const updateJoke = {
+    id,
+     jokeText,
+  jokeType
+  }
+  const searchIndex = jokes.findIndex(joke=> joke.id == id);
+  
+  console.log(searchIndex);
+  jokes[searchIndex] = updateJoke;
+console.log(updateJoke);
+res.status(202).json(updateJoke);
 
+})
 //6. PATCH a joke
 
 //7. DELETE Specific joke
