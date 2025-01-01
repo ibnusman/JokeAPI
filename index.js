@@ -57,6 +57,24 @@ app.get("/filter",(req,res)=>{
 
 //4. POST a new joke
 
+app.post("/jokes",(req,res)=>{
+ const {text:jokeText, type:jokeType} = req.body;
+if(!jokeText || !jokeType)
+{
+   return res.status(400).json({error:"Type and text are needed"});
+}
+
+
+const newJoke = {
+  id : jokes.length+1,
+  jokeText,
+  jokeType
+
+}
+jokes.push(newJoke);
+res.status(201).json(newJoke);
+});
+
 //5. PUT a joke
 
 //6. PATCH a joke
