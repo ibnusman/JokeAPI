@@ -90,7 +90,9 @@ if(!jokeText || !jokeType)
   jokeType
   }
   const searchIndex = jokes.findIndex(joke=> joke.id == id);
-  
+    if (searchIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
   console.log(searchIndex);
   jokes[searchIndex] = updateJoke;
 console.log(updateJoke);
