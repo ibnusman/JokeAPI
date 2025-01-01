@@ -100,6 +100,20 @@ res.status(202).json(updateJoke);
 
 })
 //6. PATCH a joke
+app.patch("/jokes/:id",(req,res)=>{
+  const id = Number(req.params.id);
+  const {text:jokeText, type:jokeType} = req.body;
+
+  const searchIndex = jokes.findIndex(joke=> joke.id == id);
+    if (searchIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+
+    if (jokeText) jokes[searchIndex].jokeText = jokeText;
+  if (jokeType) jokes[searchIndex].jokeType = jokeType;
+
+res.status(202).json(jokes[searchIndex]);
+})
 
 //7. DELETE Specific joke
 
