@@ -37,6 +37,24 @@ app.get("/jokes/:id",(req,res)=>{
 
 //3. GET a jokes by filtering on the joke type
 
+app.get("/filter",(req,res)=>{
+ 
+  const jtype = req.query.type;
+  if(!jtype)
+  {
+    return res.status(400).json({error:"Type is required"});
+  }
+  const jokeByType = jokes.filter(jokType => jokType.jokeType.toLowerCase() == jtype.toLowerCase()) ;
+  if(jokeByType.length > 0)
+  {
+  res.json(jokeByType);
+  }
+  else{
+    res.status(404).json({error:"Joke Not Found"})
+  }
+  
+});
+
 //4. POST a new joke
 
 //5. PUT a joke
