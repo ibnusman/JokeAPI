@@ -117,7 +117,39 @@ res.status(202).json(jokes[searchIndex]);
 
 //7. DELETE Specific joke
 
+app.delete("/jokes/:id",(req,res)=>{
+  const id = Number(req.params.id);
+
+
+  const searchIndex = jokes.findIndex(joke=> joke.id == id);
+    if (searchIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+
+    jokes.splice(searchIndex,1);
+
+res.status(200).json({error:"Message delted succfully"});
+})
+
+
+
 //8. DELETE All jokes
+
+app.delete("/all",(req,res)=>{
+  const masterCheck = req.headers.api_key;
+
+  console.log(masterCheck);
+  if(masterCheck == masterKey ) {
+    jokes=[];
+
+res.status(200).json({message: "Deleted All", jokes})
+  }
+  else{
+    return res.status(401).json({error:"Auth failed"});
+  }
+
+  
+})
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
